@@ -124,7 +124,7 @@ def game_board(game_map,player=0,row=0,column=0,just_display=False):
         return game_map,True
 
     except IndexError as e:
-        print("Error: Make sure you input row/column as 0,1 or 2 ,",e)
+        print("Error: Make sure you input row/column between 0 and size -1 ,",e) # modified print statement
         return game_map,False
 
     except Exception as e:
@@ -138,7 +138,7 @@ print("Welcome to Tic Tac Toe")
 
 while play:
     print("\nNew Game")
-    game_size = int(input("What size (size > 1) game of Tic Tac Toe ? "))
+    game_size = int(input("What size (size > 1) game of Tic Tac Toe ? "))  
     game=[[0 for _ in range(game_size)]for _ in range(game_size)]  # creates a game map for the given size 
     game_won=False
     game, _=game_board(game,just_display=True)
