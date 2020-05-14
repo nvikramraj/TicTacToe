@@ -96,6 +96,8 @@ def win(current_game):
 
 def game_board(game_map,player=0,row=0,column=0,just_display=False):
 
+    global draw # this used to check if they draw a match
+
     try:
         
         if game_map[row][column]!=0:
@@ -107,6 +109,8 @@ def game_board(game_map,player=0,row=0,column=0,just_display=False):
         if not just_display:
             game_map[row][column] = player
 
+        draw = 0
+
         for count,row in enumerate(game):  # used to change 1 to X and 2 to O and insert colours 
             colored_row=""
             
@@ -114,13 +118,14 @@ def game_board(game_map,player=0,row=0,column=0,just_display=False):
                 
                 if item==0:
                     colored_row +="   "
+                    draw+=1 # counting the number of 0's in the list
                 elif item==1:
                     colored_row+=Fore.CYAN+' X ' + Style.RESET_ALL  
                 elif item==2:
                     colored_row+=Fore.YELLOW+' O ' + Style.RESET_ALL 
             
-            print(count,colored_row)          
-        
+            print(count,colored_row)
+
         return game_map,True
 
     except IndexError as e:
@@ -134,6 +139,7 @@ def game_board(game_map,player=0,row=0,column=0,just_display=False):
 play = True
 player_1 = 0
 player_2 = 0
+draw = 0
 print("Welcome to Tic Tac Toe")
 
 while play:
@@ -153,7 +159,12 @@ while play:
             column_choice = int(input("What column do you want to play? ( 0 , 1 , 2 ) : "))
             row_choice = int(input("What row do you want to play? ( 0 , 1 , 2 ) : "))
             game,played = game_board(game, current_player,row_choice,column_choice)
-        game_won=win(game)
+        
+        if draw == 0:
+            print("\nDraw")
+            game_won=True
+        else:
+            game_won=win(game)
 
     print(f"\nScores , Player 1 : {player_1} , Player 2 : {player_2} ")
     next_game = input("Do you want to play another match (y/n) : ")	
